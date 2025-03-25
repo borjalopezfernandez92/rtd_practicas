@@ -1,1 +1,6 @@
-# rtd_practicas
+# Ejercicios formación prácticas
+
+| Contenido                                                |
+| -------------------------------------------------------- |
+| [Python](./py)                                           |
+| [PostgreSQL](./sql)                                      |
