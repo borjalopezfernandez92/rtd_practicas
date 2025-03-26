@@ -1,21 +1,30 @@
 import os, requests
 from dotenv import load_dotenv
+import pandas as pd
 
-load_dotenv()
 
-key = os.getenv("AEMET_KEY")
+load_dotenv()                   # Utilizo dotenv para cargar las variables de entorno
+key = os.getenv("AEMET_KEY")    # Cargo la api key
 
-print(key)
-
-url = "https://opendata.aemet.es/opendata/api/prediccion/especifica/municipio/horaria/065"
-
-querystring = {"api_key":key}
-print(querystring)
-
+querystring = {"api_key":key}   # Preparo la api_key
 headers = {
-    'cache-control': "no-cache"
+    'cache-control': "no-cache" # Y los headers
     }
 
-response = requests.request("GET", url, headers=headers, params=querystring)
+urlEstaciones = "https://opendata.aemet.es/opendata/api/valores/climatologicos/inventarioestaciones/todasestaciones/" # preparo la url
+responseEstaciones = requests.request("GET", urlEstaciones, headers=headers, params=querystring).json()               # para traer todos los códigos
 
-print(response.text)
+urlData = responseEstaciones['datos']                                                               # Filtro la url de la respuesta
+responseData = requests.request("GET", urlData, headers=headers, params=querystring).json()         # Y me traigo todos los códigos
+
+df = pd.DataFrame(responseData)                                                                     # Creo un dataframe con los datos
+getafe = df[df['nombre'].str.contains('GETAFE', case=False)]                                        # Y busco la que contiene getafe
+getafeCode = getafe.iloc[0]['indsinop']                                                             # Busco su código
+
+firstDate = '2024-08-22T08%3A30%3A30UTC'                                                            # Preparo las fechas de búsqueda
+secondDate = '2024-08-23T08%3A30%3A30UTC'                                                           #   "             "         "
+
+urlGetafe = f'https://opendata.aemet.es/opendata/api/valores/climatologicos/diarios/datos/fechaini/{firstDate}/fechafin/{secondDate}/estacion/{getafeCode}' #Preparo la URL para obtener las temperaturas
+
+responseGetafe = requests.request("GET", urlGetafe, headers=headers)    # y me las traigo
+print(f"Esta es la respuesta del último endpoint {responseGetafe} pero parece estar vacía: ",responseGetafe.text) # pero esta respuesta parece vacía
