@@ -1,4 +1,4 @@
-# Ejercicios formación prácticas
+# Formación Prácticas
 
 | Contenido                                                |
 | -------------------------------------------------------- |
