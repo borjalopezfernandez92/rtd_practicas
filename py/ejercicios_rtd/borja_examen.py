@@ -67,7 +67,7 @@ def ej2(sheet="Hoja1"):
             ##### Ejercicio extra 2
             yesterday = datetime.now() - timedelta(days=1)
             format_date = yesterday.strftime('%Y-%m-%d')
-            gbpPrice = currencyHistorical(format_date, ["USD"], "GBP")
+            gbpPrice = currencyHistorical(format_date, ["GBP"], "USD")
             print(f"Valor libras ->",gbpPrice)
             total_price_gbp = gbpPrice * total_price
         

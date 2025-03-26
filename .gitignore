@@ -1,4 +1,5 @@
 /py/ejercicios_rtd/.env
-
 /py/ejercicios_rtd/connection_data.json
 
+/py/ejercicios_rtd/dataset/dataSet.xlsx
+/py/ejercicios_rtd/dataset/connection_data.json
