@@ -1,8 +1,8 @@
 import pandas as pd
 import json
 from pathlib import Path
-import requests
 from sqlalchemy import create_engine
+from functions import *
 
 
 ################## Configuración
@@ -83,101 +83,46 @@ def getData(file):
     jobTitleExtra_data_convert = formatJobTitleExtra(jobTitleExtra_data)     # Llamo a la función encargada del formateo
 
     ## Salary
-    salary_data = excelData.iloc[:, 5]
+    salary_data = excelData.iloc[:, 5]                                       # Obtengo el salario
 
     ## Bonus salary
-    bonusSalary_data = excelData.iloc[:, [6]]
-    bonusSalary_data_converted = formatBonusSalary(bonusSalary_data)
-    print(bonusSalary_data)
-    ## DataFrame
-    df = pd.DataFrame({
-        'time_stamp': timeStamp_convert,                                     # Inserción de timestamp formateado
-        'age': age_convert,                                                  # Inserción de edad formateada
-        'industry': industry_convert,                                        # Inserto las industrias a modo de categoría
-        'industry_extra': industry_extra,                                    # Y guardo el resto de la información de las categorías
-        'job_title': jobTitle_data,                                          # Inserción de los títulos de los trabajos
-        'job_title_extra': jobTitleExtra_data_convert,                       # Y de información extra cuando existe
-        'salary': salary_data,                                               # Inserción del salario
-        'bonus_salary': bonusSalary_data_converted,
-    })
+    bonusSalary_data = excelData.iloc[:, 6]                                  # Obtengo los extras del salario si existen
+    bonusSalary_data_converted = formatBonusSalary(bonusSalary_data)         # Y los paso a la función que los formatea. Sustituye los valores nulos por 0 para poder calcularlo después.
 
-    print(df)
+    ## Divisa
+    currency_data = excelData.iloc[:, 7]                                     # Obtengo la columna currency
+    currency_data_extra = excelData.iloc[:, 8]                               # Y la que tiene la información extra
+    currency_data_converted = formatCurrency(currency_data, currency_data_extra)   # La formateo en una función donde en el caso de que la divisa sea "other", se trae la información que haya en la columna contigua.
 
-def formatBonusSalary(data):
-    formated_data = []
+    ## Additional Income
+    addIncome_data = excelData.iloc[:, 9]
+    addIncome_data_converted = formatAddIncome(addIncome_data)
 
-    for i in data:
-        print(f"here{i}")
-        if isinstance(i, float):
-            formated_data.append(0)
-        else:
-            formated_data.append(i)
-    return formated_data
+    ## Country
+    country_data = excelData.iloc[:, 10]
+    country_data_converted = formatCountry(country_data)
 
+    # print(us)
+    print(country_data_converted)
 
-def formatJobTitleExtra(data):
-    formated_data = []
-    for i in data:
-        if isinstance(i, str):
-            formated_data.append(i)
-        else:
-            formated_data.append("na")
-    
-    return formated_data
+    # print(f"original -> {len(country_data)}")
+    # ## DataFrame
+    # df = pd.DataFrame({
+    #     'time_stamp': timeStamp_convert,                                     # Inserción de timestamp formateado
+    #     'age': age_convert,                                                  # Inserción de edad formateada
+    #     'industry': industry_convert,                                        # Inserto las industrias a modo de categoría
+    #     'industry_extra': industry_extra,                                    # Y guardo el resto de la información de las categorías
+    #     'job_title': jobTitle_data,                                          # Inserción de los títulos de los trabajos
+    #     'job_title_extra': jobTitleExtra_data_convert,                       # Y de información extra cuando existe
+    #     'salary': salary_data,                                               # Inserción del salario
+    #     'bonus_salary': bonusSalary_data_converted,                          # Inserción de los bonus del salario
+    #     'currency': currency_data_converted,                                 # Inserción de currency
+    #     'additional_income': addIncome_data_converted,                       # Inserción de información adicional sobre el income
+    #     'country': country_data_converted,
+    # })
 
+    # print(df)
 
-def formatIndustry(industryData):   ## Función que maneja el formato de la industria
-    industry_list = []              ## Lista que almacenará las industriar
-    industry_extra = []             ## Lista que almacenará la información extra
-
-    for industry in industryData:   ## Recorro la lista que recibo por parámetro y de cada valor compruebo:
-        if isinstance (industry, str):  ## Compruebo si es un string
-            if len(industry.split()) == 1:  ## Y si trae una sola palabra
-                industry_list.append(industry.split()[0])   ## Para agregar esta palabra a la lista
-                industry_extra.append("na")               ## Y un valor predeterminado a extra al estar vacío.
-            else:                                           ## Si el valor tiene más de una palabra
-                industry_list.append(industry.split()[0])   ## cojo la primera palabra como industria
-                industry_extra.append(' '.join(industry.split()[1:])if len(industry.split()) > 1 else "") ## Y el resto como extra
-        else:
-            industry_list.append("unclassified")    # En caso de que el valor no sea un string, lo formateo como industria sin clasificar
-            industry_extra.append("na")           # haciendo lo mismo con la información extra
-
-    return industry_list,industry_extra
-
-
-def formatAge(age): #función que convierte los rangos de edad en ids para insertar en DB
-
-    if isinstance(age, int):    # formato que espera integers
-        if age < 18:
-            return 0
-        elif age >= 18 and age < 25:
-            return 1
-        elif age >= 25 and age < 35:
-            return 2
-        elif age >= 35 and age < 45:
-            return 3
-        elif age >= 45 and age < 55:
-            return 4
-        elif age >= 55 and age < 65:
-            return 5
-        elif age >= 65:
-            return 6
-    
-    elif isinstance(age, str):  # formato encontrado en el excel
-        if age == "18-24":
-            return 1
-        elif age == "25-34":
-            return 2
-        elif age == "35-44":
-            return 3
-        elif age == "45-54":
-            return 4
-        elif age == "55-64":
-            return 5
-        elif age == "65 or over":
-            return 6
-        else:
-            return 0
 
 if __name__ == "__main__":
     getData("dataSet.xlsx")
