@@ -15,15 +15,58 @@ def textCleaner(text):
     return clean_text
 
 def formatCountry(data):
-        
     country_configs = {
         'US': {'mask_func': is_us_match, 'code': 'US'},
         'GB': {'mask_func': is_uk_match, 'code': 'GB'},
-        'CAD': {'mask_func': is_cad_match, 'code': 'CAD'},
+        'CA': {'mask_func': is_ca_match, 'code': 'CA'},
         'NL': {'mask_func': is_nl_match, 'code': 'NL'},
         'AF': {'mask_func': is_af_match, 'code': 'AF'},
         'NZ': {'mask_func': is_nz_match, 'code': 'NZ'},
         'AR': {'mask_func': is_ar_match, 'code': 'AR'},
+        'AU': {'mask_func': is_au_match, 'code': 'AU'},
+        'SP': {'mask_func': is_sp_match, 'code': 'SP'},
+        'FL': {'mask_func': is_fl_match, 'code': 'FL'},
+        'FR': {'mask_func': is_fr_match, 'code': 'FR'},
+        'DE': {'mask_func': is_de_match, 'code': 'DE'},
+        'IE': {'mask_func': is_ie_match, 'code': 'IE'},
+        'IN': {'mask_func': is_in_match, 'code': 'IN'},
+        'ISA': {'mask_func': is_isa_match, 'code': 'ISA'},
+        'DK': {'mask_func': is_dk_match, 'code': 'DK'},
+        'CH': {'mask_func': is_ch_match, 'code': 'CH'},
+        'BM': {'mask_func': is_bm_match, 'code': 'BM'},
+        'MY': {'mask_func': is_my_match, 'code': 'MY'},
+        'MX': {'mask_func': is_mx_match, 'code': 'MX'},
+        'ZA': {'mask_func': is_za_match, 'code': 'ZA'},
+        'SE': {'mask_func': is_se_match, 'code': 'SE'},
+        'HK': {'mask_func': is_hk_match, 'code': 'HK'},
+        'KW': {'mask_func': is_kw_match, 'code': 'KW'},
+        'NO': {'mask_func': is_no_match, 'code': 'NO'},
+        'LK': {'mask_func': is_lk_match, 'code': 'LK'},
+        'VI': {'mask_func': is_vi_match, 'code': 'VI'},
+        'GR': {'mask_func': is_gr_match, 'code': 'GR'},
+        'JP': {'mask_func': is_jp_match, 'code': 'JP'},
+        'BR': {'mask_func': is_br_match, 'code': 'BR'},
+        'HU': {'mask_func': is_hu_match, 'code': 'HU'},
+        'LU': {'mask_func': is_lu_match, 'code': 'LU'},
+        'CO': {'mask_func': is_co_match, 'code': 'CO'},
+        'TT': {'mask_func': is_tt_match, 'code': 'TT'},
+        'KY': {'mask_func': is_ky_match, 'code': 'KY'},
+        'CZ': {'mask_func': is_cz_match, 'code': 'CZ'},
+        'LV': {'mask_func': is_lv_match, 'code': 'LV'},
+        'PR': {'mask_func': is_pr_match, 'code': 'PR'},
+        'RW': {'mask_func': is_rw_match, 'code': 'RW'},
+        'AE': {'mask_func': is_ae_match, 'code': 'AE'},
+        'BD': {'mask_func': is_bd_match, 'code': 'BD'},
+        'RO': {'mask_func': is_ro_match, 'code': 'RO'},
+        'RS': {'mask_func': is_rs_match, 'code': 'RS'},
+        'PH': {'mask_func': is_ph_match, 'code': 'PH'},
+        'RU': {'mask_func': is_ru_match, 'code': 'RU'},
+        'PL': {'mask_func': is_pl_match, 'code': 'PL'},
+        'TR': {'mask_func': is_tr_match, 'code': 'TR'},
+        'IT': {'mask_func': is_it_match, 'code': 'IT'}, #<- WIP
+
+
+        'other': {'mask_func': is_other_match, 'code': 'other'},
     }
 
     masks = {country: data.apply(config['mask_func'])
@@ -32,7 +75,7 @@ def formatCountry(data):
     formated_data = data.copy()
     all_masks = pd.Series(False, index=data.index)
 
-    for country in ['US', 'GB', 'CAD', 'NL', 'AF','NZ']:
+    for country in country_configs.keys():
         mask = masks[country]
         exclude_mask = all_masks if all_masks.any() else pd.Series(False, index=data.index)
         final_mask = mask & ~exclude_mask
@@ -40,6 +83,7 @@ def formatCountry(data):
         all_masks |= mask
 
     return formated_data
+
 
 def formatCurrency(data,dataExtra):                     # Formateo de divisa
     formated_data = []

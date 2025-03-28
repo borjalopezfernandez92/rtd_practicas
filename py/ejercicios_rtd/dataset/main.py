@@ -101,7 +101,7 @@ def getData(file):
     ## Country
     country_data = excelData.iloc[:, 10]
     country_data_converted = formatCountry(country_data)
-
+    print(f"-> {country_data[0]}")
     # print(us)
     print(country_data_converted)
 
