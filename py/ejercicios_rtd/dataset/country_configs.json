@@ -1,0 +1,394 @@
+    { 
+    "US": {
+        "valid_terms": ["USA", "STATES", "AMERICA", "HARTFORD", "VIRGINIA"],
+        "code": "US"
+    },
+    "GB": {
+        "valid_terms": ["UK", "KINGDOM", "BRITAIN", "ENGLAND", "SCOTLAND", "WALES", "NORTHERN"],
+        "code": "GB"
+    },
+    "CA": {
+        "valid_terms": ["CANADA"],
+        "code": "CA"
+    },
+    "NL": {
+        "valid_terms": ["NETHERLANDS", "AMSTERDAM"],
+        "code": "NL"
+    },
+    "AF": {
+        "valid_terms": ["AFGHANISTAN", "KABUL"],
+        "code": "AF"
+    },
+    "NZ": {
+        "valid_terms": ["NEW ZEALAND", "Z34L4ND"],
+        "code": "NZ"
+    },
+    "AR": {
+        "valid_terms": ["ARGENTINA"],
+        "code": "AR"
+    },
+    "AU": {
+        "valid_terms": ["AUSTRAILA"],
+        "code": "AU"
+    },
+    "SP": {
+        "valid_terms": ["SPAIN", "ESPAÑA", "CATALONIA"],
+        "code": "SP"
+    },
+    "FL": {
+        "valid_terms": ["FINLAND", "HELSINKI"],
+        "code": "FL"
+    },
+    "FR": {
+        "valid_terms": ["FRANCE", "PARIS"],
+        "code": "FR"
+    },
+    "DE": {
+        "valid_terms": ["GERMANY"],
+        "code": "DE"
+    },
+    "IE": {
+        "valid_terms": ["IRELAND", "DUBLIN"],
+        "code": "IE"
+    },
+    "IN": {
+        "valid_terms": ["INDIA", "DEHLI"],
+        "code": "IN"
+    },
+    "ISA": {
+        "valid_terms": ["ISA", "SOLAR ALLIANCE"],
+        "code": "ISA"
+    },
+    "DK": {
+        "valid_terms": ["DENMARK", "COPENHAGEN"],
+        "code": "DK"
+    },
+    "CH": {
+        "valid_terms": ["SWITZERLAND"],
+        "code": "CH"
+    },
+    "BM": {
+        "valid_terms": ["BERMUDA", "HAMILTON"],
+        "code": "BM"
+    },
+    "MY": {
+        "valid_terms": ["MALAYSIA", "KUALA LUMPUR"],
+        "code": "MY"
+    },
+    "MX": {
+        "valid_terms": ["MEXICO"],
+        "code": "MX"
+    },
+    "ZA": {
+        "valid_terms": ["SOUTH AFRICA"],
+        "code": "ZA"
+    },
+    "SE": {
+        "valid_terms": ["SWEDEN", "STOKHOLM"],
+        "code": "SE"
+    },
+    "HK": {
+        "valid_terms": ["HONG KONG"],
+        "code": "HK"
+    },
+    "KW": {
+        "valid_terms": ["KUWAIT"],
+        "code": "KW"
+    },
+    "NO": {
+        "valid_terms": ["NORWAY", "OSLO"],
+        "code": "NO"
+    },
+    "LK": {
+        "valid_terms": ["SRI LANKA"],
+        "code": "LK"
+    },
+    "VI": {
+        "valid_terms": ["VIRGIN"],
+        "code": "VI"
+    },
+    "GR": {
+        "valid_terms": ["GREECE", "ATHENS"],
+        "code": "GR"
+    },
+    "JP": {
+        "valid_terms": ["JAPAN", "TOKYO"],
+        "code": "JP"
+    },
+    "BR": {
+        "valid_terms": ["BRAZIL", "BRASIL"],
+        "code": "BR"
+    },
+    "HU": {
+        "valid_terms": ["HUNGARY", "BUDAPEST"],
+        "code": "HU"
+    },
+    "LU": {
+        "valid_terms": ["LUXEMBOURG"],
+        "code": "LU"
+    },
+    "CO": {
+        "valid_terms": ["COLOMBIA", "BOGOTA"],
+        "code": "CO"
+    },
+    "TT": {
+        "valid_terms": ["TRINIDAD", "TOBAGO"],
+        "code": "TT"
+    },
+    "KY": {
+        "valid_terms": ["CAYMAN"],
+        "code": "KY"
+    },
+    "CZ": {
+        "valid_terms": ["CZECH"],
+        "code": "CZ"
+    },
+    "LV": {
+        "valid_terms": ["LATVIA"],
+        "code": "LV"
+    },
+    "PR": {
+        "valid_terms": ["PUERTO RICO"],
+        "code": "PR"
+    },
+    "RW": {
+        "valid_terms": ["RWANDA"],
+        "code": "RW"
+    },
+    "AE": {
+        "valid_terms": ["EMIRATES", "UAE"],
+        "code": "AE"
+    },
+    "BD": {
+        "valid_terms": ["BANGLADESH"],
+        "code": "BD"
+    },
+    "RO": {
+        "valid_terms": ["ROMANIA"],
+        "code": "RO"
+    },
+    "RS": {
+        "valid_terms": ["SERBIA"],
+        "code": "RS"
+    },
+    "PH": {
+        "valid_terms": ["PHILIPPINES"],
+        "code": "PH"
+    },
+    "RU": {
+        "valid_terms": ["RUSSIA"],
+        "code": "RU"
+    },
+    "PL": {
+        "valid_terms": ["POLAND"],
+        "code": "PL"
+    },
+    "TR": {
+        "valid_terms": ["TURKEY"],
+        "code": "TR"
+    },
+    "IT": {
+        "valid_terms": ["ITALY", "ITALIA"],
+        "code": "IT"
+    },
+    "JE": {
+        "valid_terms": ["JERSEY"],
+        "code": "JE"
+    },
+    "CN": {
+        "valid_terms": ["CHINA"],
+        "code": "CN"
+    },
+    "IL": {
+        "valid_terms": ["ISRAEL"],
+        "code": "IL"
+    },
+    "TW": {
+        "valid_terms": ["TAIWAN"],
+        "code": "TW"
+    },
+    "KH": {
+        "valid_terms": ["CAMBODIA"],
+        "code": "KH"
+    },
+    "VN": {
+        "valid_terms": ["VIETNAM"],
+        "code": "VN"
+    },
+    "SG": {
+        "valid_terms": ["SINGAPORE"],
+        "code": "SG"
+    },
+    "KR": {
+        "valid_terms": ["SOUTH KOREA"],
+        "code": "KR"
+    },
+    "TH": {
+        "valid_terms": ["THAILAND"],
+        "code": "TH"
+    },
+    "LT": {
+        "valid_terms": ["LITHUANIA"],
+        "code": "LT"
+    },
+    "ER": {
+        "valid_terms": ["ERITREA"],
+        "code": "ER"
+    },
+    "ID": {
+        "valid_terms": ["INDONESIA"],
+        "code": "ID"
+    },
+    "IS": {
+        "valid_terms": ["ICELAND", "1C3"],
+        "code": "IS"
+    },
+    "CU": {
+        "valid_terms": ["CUBA"],
+        "code": "CU"
+    }, 
+    "SI": {
+        "valid_terms": ["SLOVENIA"],
+        "code": "SI"
+    }, 
+    "CI": {
+        "valid_terms": ["IVORY", "D'IVOIRE"],
+        "code": "CI"
+    },
+    "SO": {
+        "valid_terms": ["SOMALIA"],
+        "code": "SO"
+    },
+    "SK": {
+        "valid_terms": ["SLOVAKIA"],
+        "code": "SK"
+    },
+    "PT": {
+        "valid_terms": ["PORTUGAL"],
+        "code": "PT"
+    },  
+    "SL": {
+        "valid_terms": ["SIERRA LEONE"],
+        "code": "SL"
+    },  
+    "BE": {
+        "valid_terms": ["BELGIUM"],
+        "code": "BE"
+    },  
+    "BS": {
+        "valid_terms": ["BAHAMAS"],
+        "code": "BS"
+    },  
+    "CR": {
+        "valid_terms": ["COSTA RICA", "C0R"],
+        "code": "CR"
+    },  
+    "CL": {
+        "valid_terms": ["Chile"],
+        "code": "CL"
+    },  
+    "QA": {
+        "valid_terms": ["QATAR"],
+        "code": "QA"
+    },  
+    "NG": {
+        "valid_terms": ["NIGERIA"],
+        "code": "NG"
+    },  
+    "PA": {
+        "valid_terms": ["PANAMA"],
+        "code": "PA"
+    },  
+    "CG": {
+        "valid_terms": ["CONGO"],
+        "code": "CG"
+    },  
+    "UY": {
+        "valid_terms": ["URUGUAY"],
+        "code": "UY"
+    },  
+    "PK": {
+        "valid_terms": ["PAKISTAN"],
+        "code": "PK"
+    },  
+    "UG": {
+        "valid_terms": ["UGANDA"],
+        "code": "UG"
+    },  
+    "MT": {
+        "valid_terms": ["MALTA"],
+        "code": "MT"
+    },  
+    "SA": {
+        "valid_terms": ["SAUDI"],
+        "code": "SA"
+    },  
+    "BG": {
+        "valid_terms": ["BULGARIA"],
+        "code": "BG"
+    },  
+    "EE": {
+        "valid_terms": ["ESTONIA"],
+        "code": "EE"
+    },  
+    "MA": {
+        "valid_terms": ["MOROCCO"],
+        "code": "MA"
+    },  
+    "EC": {
+        "valid_terms": ["ECUADOR"],
+        "code": "EC"
+    },  
+    "ZW": {
+        "valid_terms": ["ZIMBABWE"],
+        "code": "ZW"
+    },  
+    "GH": {
+        "valid_terms": ["GHANA"],
+        "code": "GH"
+    },  
+    "HR": {
+        "valid_terms": ["CROATIA"],
+        "code": "HR"
+    },  
+    "UA": {
+        "valid_terms": ["UKRAINE"],
+        "code": "UA"
+    },  
+    "IM": {
+        "valid_terms": ["ISLE OF MAN", "1SL3M4N"],
+        "code": "IM"
+    },  
+    "JM": {
+        "valid_terms": ["JAMAICA"],
+        "code": "JM"
+    },  
+    "KE": {
+        "valid_terms": ["KENYA"],
+        "code": "KE"
+    },  
+    "JO": {
+        "valid_terms": ["JORDAN"],
+        "code": "JO"
+    },  
+    "CY": {
+        "valid_terms": ["CYPRUS"],
+        "code": "CY"
+    },  
+    "LI": {
+        "valid_terms": ["LIECHTENSTEIN"],
+        "code": "LI"
+    },  
+    "BA": {
+        "valid_terms": ["BOSNIA AND HERZEGOVINA", "B0SN14"],
+        "code": "BA"
+    },  
+    "TZ": {
+        "valid_terms": ["TANZANIA", "T4NZ4"],
+        "code": "TZ"
+    },  
+    "EG": {
+        "valid_terms": ["EGYPT"],
+        "code": "EG"
+    }
+}

@@ -99,50 +99,30 @@ def getData(file):
     addIncome_data_converted = formatAddIncome(addIncome_data)
 
     ## Country
-    country_configs = load_country_configs('country_configs.json')                  # Lectura de los países, las palabras que los relacionan y sus códigos
-    country_data_converted = formatUnMatchedCountries(excelData, country_configs)   # Llamada a función que ataca casos concretos dificiles de filtrar.
+    country_configs = load_country_configs('country_configs.json')
+    country_data = excelData.iloc[:, 10]
+    country_data_converted = formatCountry(country_data, country_configs)
+    print(f"-> {country_data[0]}")
+    # print(us)
+    print(country_data_converted)
 
-    ## US State
-    state_data = excelData
-    column = "If you're in the U.S., what state do you work in?"
-    state_data.replace({column: 'District of Columbia'}, {column: 'Washington'}, inplace=True)  # Sustitución de inputs difíciles de filtrar
-    state_data.replace({column: 'DC'}, {column: 'Washington'}, inplace=True)
-    state_data_converted = formatStates(state_data.iloc[:,11])
-
-    ## City
-    city_data = excelData.iloc[:, 12]                                       # Utilizo los datos de las ciudades tal cual
-
-    ## Work Experience
-    we_data = excelData
-    column = "How many years of professional work experience do you have overall?"
-    we_data_converted = formatWorkExperience(we_data, column, 13)                       # rangos de edad actualizados a futuros IDS
-
-    ## Field Experience
-    fe_dat = excelData
-    column = "How many years of professional work experience do you have in your field?"  
-    fe_dat_converted = formatWorkExperience(fe_dat, column, 14)
-
+    # print(f"original -> {len(country_data)}")
     # ## DataFrame
-    df = pd.DataFrame({
-        'time_stamp': timeStamp_convert,                                     # Inserción de timestamp formateado
-        'age': age_convert,                                                  # Inserción de edad formateada
-        'industry': industry_convert,                                        # Inserto las industrias a modo de categoría
-        'industry_extra': industry_extra,                                    # Y guardo el resto de la información de las categorías
-        'job_title': jobTitle_data,                                          # Inserción de los títulos de los trabajos
-        'job_title_extra': jobTitleExtra_data_convert,                       # Y de información extra cuando existe
-        'salary': salary_data,                                               # Inserción del salario
-        'bonus_salary': bonusSalary_data_converted,                          # Inserción de los bonus del salario
-        'currency': currency_data_converted,                                 # Inserción de currency
-        'additional_income': addIncome_data_converted,                       # Inserción de información adicional sobre el income
-        'country': country_data_converted,                                   # Inserción de países
-        'us_state': state_data_converted,                                    # Inserción de estados americanos
-        'city': city_data,                                                   # Inserción de ciudades
-        'work_experience': we_data_converted,                                # Inserción años de experiencia trabajados
-        'field_experience': fe_dat_converted                                 # Inserción de años experiencia campo trabajo
-    })
+    # df = pd.DataFrame({
+    #     'time_stamp': timeStamp_convert,                                     # Inserción de timestamp formateado
+    #     'age': age_convert,                                                  # Inserción de edad formateada
+    #     'industry': industry_convert,                                        # Inserto las industrias a modo de categoría
+    #     'industry_extra': industry_extra,                                    # Y guardo el resto de la información de las categorías
+    #     'job_title': jobTitle_data,                                          # Inserción de los títulos de los trabajos
+    #     'job_title_extra': jobTitleExtra_data_convert,                       # Y de información extra cuando existe
+    #     'salary': salary_data,                                               # Inserción del salario
+    #     'bonus_salary': bonusSalary_data_converted,                          # Inserción de los bonus del salario
+    #     'currency': currency_data_converted,                                 # Inserción de currency
+    #     'additional_income': addIncome_data_converted,                       # Inserción de información adicional sobre el income
+    #     'country': country_data_converted,
+    # })
 
-    print(df)
-    df.to_excel('clean_data.xlsx', index=False)
+    # print(df)
 
 
 if __name__ == "__main__":
