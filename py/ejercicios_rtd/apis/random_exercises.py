@@ -1,6 +1,7 @@
 import requests, os
 from datetime import datetime
 from dotenv import load_dotenv
+import pandas as pd
 
 load_dotenv()
 api_key = os.getenv("weather_key")
@@ -14,7 +15,7 @@ api_key = os.getenv("weather_key")
 # 5. Combine data from multiple pages
 # 6. Handle rate limiting delays
 def menu(api_key):
-    requestType = input("Escoge elejercicio: \n(1)Convert temperature from Celsius to Fahrenheit\n(2)Parse the condition text into categories\n(3)Create a structured summary dictionary\n")
+    requestType = input("Escoge elejercicio: \n(1)Convert temperature from Celsius to Fahrenheit\n(2)Parse the condition text into categories\n(3)Create a structured summary dictionary\n(4)Json data")
     requestInt = int(requestType)
 
     if requestInt == 1:
@@ -23,6 +24,8 @@ def menu(api_key):
         condition_categories(api_key)
     elif requestInt == 3:
         summary_dict(api_key)
+    elif requestInt == 4:
+        dataAccess()
 
 
 def transform_weather_data(api_key):
@@ -97,5 +100,30 @@ def pagination():
 
     response = requests.get(base_url).json()
     print(response)
+
+def dataAccess():
+
+    data = pd.read_json('random.json')
+    students_df = pd.json_normalize(data['data']['students'])
+
+    df = pd.DataFrame({
+        "students":{
+            "first_name": students_df.iloc[:,0].values[0]
+        } 
+    })
+
+    # df.to_excel('random.xlsx', index=False)
+    print(df)
+
+    # print(df)
+    # metaData(data)
+    # dataFullAccess(data)
+
+
+
+# def metaData(data):
+#     print(f"Metadata --> {data['metadata']}")
+# def dataFullAccess(data):
+#     print(f"Full data ---> {data}")
 
 menu(api_key)

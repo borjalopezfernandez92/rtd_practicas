@@ -1,0 +1,90 @@
+{
+    "meta": {
+        "columns": [
+            {
+                "key": "student_id",
+                "display_name": "Student ID",
+                "type": "string"
+            },
+            {
+                "key": "course_code",
+                "display_name": "Course Code",
+                "type": "string"
+            },
+            {
+                "key": "grade",
+                "display_name": "Grade",
+                "type": "number"
+            }
+        ],
+        "groupings": {
+            "academic_terms": ["Fall", "Spring", "Summer"],
+            "departments": ["CS", "Math", "Physics"],
+            "campus_locations": ["Main", "Downtown", "Online"]
+        }
+    },
+    "data": {
+        "students": [
+            {
+                "personal_info": {
+                    "first_name": "John",
+                    "last_name": "Smith",
+                    "email": "john.smith@university.edu",
+                    "student_id": "S12345"
+                },
+                "academic_records": {
+                    "gpa": 3.75,
+                    "credits_completed": 120,
+                    "major": "Computer Science",
+                    "minor": "Mathematics"
+                },
+                "contact_details": {
+                    "phone": "+1-555-0123",
+                    "address": {
+                        "street": "123 Main St",
+                        "city": "Anytown",
+                        "state": "CA",
+                        "zip": "12345"
+                    }
+                }
+            },
+            {
+                "personal_info": {
+                    "first_name": "Marina",
+                    "last_name": "Cabrera",
+                    "email": "marina.cabrera@university.edu",
+                    "student_id": "S12344"
+                },
+                "academic_records": {
+                    "gpa": 3.75,
+                    "credits_completed": 120,
+                    "major": "Computer Science",
+                    "minor": "Mathematics"
+                },
+                "contact_details": {
+                    "phone": "+1-555-0124",
+                    "address": {
+                        "street": "122 Main St",
+                        "city": "Anytown",
+                        "state": "CA",
+                        "zip": "12344"
+                    }
+                }
+            }
+        ],
+        "courses": [
+            {
+                "course_code": "CS101",
+                "title": "Introduction to Programming",
+                "department": "CS",
+                "credits": 4,
+                "schedule": {
+                    "days": ["Monday", "Wednesday"],
+                    "time": "09:00 AM - 10:15 AM",
+                    "location": "Main Campus - Building A"
+                },
+                "prerequisites": ["None"]
+            }
+        ]
+    }
+}
