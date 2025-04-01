@@ -63,46 +63,88 @@ def getData(file):
     excelData = pd.read_excel(file) # Leo el excel
 
     ## TimeStamp
-    timeStamp_convert = pd.to_datetime(excelData.iloc[:, 0]).dt.floor('min') #Convierto el timestamp para coger sólo hasta los minutos
+    """
+    Convierto el timestamp para coger sólo hasta los minutos
+    """
+    timeStamp_convert = pd.to_datetime(excelData.iloc[:, 0]).dt.floor('min') 
     
     ## Edad
-    age_data = excelData.iloc[:, 1]                                          # Convierto la edad en integer que harán función de ID a una tabla de rangos de edad
-    age_convert = []                                                         # Lista inicializada para almacenar las edades
-    for age in age_data:                                                     # Formateo de las edades usando función encargada de ello.
+    """
+    Convierto la edad en integer que harán función de ID a una tabla de rangos de edad
+    """
+    age_data = excelData.iloc[:, 1]
+    age_convert = []
+    for age in age_data:
         age_convert.append(formatAge(age))
 
     ## Industria
-    industry_data = excelData.iloc[:, 2].str.lower()                         # Obtengo los valores en la columna de las industrias y lo reduzco a minúsculas
-    industry_convert,industry_extra = formatIndustry(industry_data)          # llamo a la función que se encarga de formatearlo, en la cual cojo la primera palabra de cada entrada y el resto aparte.
+    """
+    Obtengo los valores en la columna de las industrias y lo reduzco a minúsculas
+    luego llamo a la función que se encarga de formatearlo, en la cual cojo la primera palabra de cada entrada y aparto el resto.
+    """
+    industry_data = excelData.iloc[:, 2].str.lower()
+    industry_convert,industry_extra = formatIndustry(industry_data)
 
     ## Job Title
-    jobTitle_data = excelData.iloc[:, 3].str.lower()                         # Obtengo los títulos de trabajo 
-
+    """
+    Obtengo los títulos de trabajo pasándolos a minúscula
+    """
+    jobTitle_data = excelData.iloc[:, 3].str.lower()
     ## Job Title Extra
-    jobTitleExtra_data = excelData.iloc[:, 4].str.lower()                    # Obtengo la información extra de los títulos de trabajo
-    jobTitleExtra_data_convert = formatJobTitleExtra(jobTitleExtra_data)     # Llamo a la función encargada del formateo
+    """
+    Obtengo la información extra de los títulos de trabajo en minúscula
+    Y Llamo a la función encargada del formateo; si no recibe un string, devuelve 'noData' al ser no ser data valido
+    """
+    jobTitleExtra_data = excelData.iloc[:, 4].str.lower()
+    jobTitleExtra_data_convert = formatJobTitleExtra(jobTitleExtra_data) 
 
     ## Salary
-    salary_data = excelData.iloc[:, 5]                                       # Obtengo el salario
+    """
+    Simplemente obtengo el salario
+    """
+    salary_data = excelData.iloc[:, 5]                                       
 
     ## Bonus salary
-    bonusSalary_data = excelData.iloc[:, 6]                                  # Obtengo los extras del salario si existen
-    bonusSalary_data_converted = formatBonusSalary(bonusSalary_data)         # Y los paso a la función que los formatea. Sustituye los valores nulos por 0 para poder calcularlo después.
+    """
+    Obtengo los extras del salario si existen
+    Y los paso a la función que los formatea, 
+    la cual sustituye los valores nulos por 0 para poder calcularlo después.
+    """
+    bonusSalary_data = excelData.iloc[:, 6] 
+    bonusSalary_data_converted = formatBonusSalary(bonusSalary_data)
 
     ## Divisa
-    currency_data = excelData.iloc[:, 7]                                     # Obtengo la columna currency
-    currency_data_extra = excelData.iloc[:, 8]                               # Y la que tiene la información extra
-    currency_data_converted = formatCurrency(currency_data, currency_data_extra)   # La formateo en una función donde en el caso de que la divisa sea "other", se trae la información que haya en la columna contigua.
+    """
+    Obtengo la columna currency y la que tiene la información extra.
+    La formateo en una función donde en el caso de que la divisa sea "other", se trae la información que haya en la columna contigua.
+    """
+    currency_data = excelData.iloc[:, 7]
+    currency_data_extra = excelData.iloc[:, 8]
+    currency_data_converted = formatCurrency(currency_data, currency_data_extra)
 
     ## Additional Income
+    """
+    Formateo los datos devolviendo "noData" cuando los campos estén vacíos
+    """
     addIncome_data = excelData.iloc[:, 9]
     addIncome_data_converted = formatAddIncome(addIncome_data)
 
     ## Country
-    country_configs = load_country_configs('country_configs.json')                  # Lectura de los países, las palabras que los relacionan y sus códigos
-    country_data_converted = formatUnMatchedCountries(excelData, country_configs)   # Llamada a función que ataca casos concretos dificiles de filtrar.
+    """
+    Obtengo los países, las palabras que los relacionan y sus códigos de un json externo
+    Llamo a la función que ataca casos concretos dificiles de filtrar.
+    Dentro de esta función llamo a otra función encargada de formatear los países (formatCountry()).
+    Aquí convierto todos los inputs en el código del país que le corresponda, obteniendo finalmente los códigos de cada país.
+    """
+    country_configs = load_country_configs('country_configs.json') 
+    country_data_converted = formatUnMatchedCountries(excelData, country_configs)
 
     ## US State
+    """
+    Utilizo librería "us" para validar los inputs comparándolos con estados norteamericanos.
+    Si el input no es un estado válido devolverá "other(invalid_data)".
+    Hay un par de casos difíciles de filtrar que he atacado directamente.
+    """
     state_data = excelData
     column = "If you're in the U.S., what state do you work in?"
     state_data.replace({column: 'District of Columbia'}, {column: 'Washington'}, inplace=True)  # Sustitución de inputs difíciles de filtrar
@@ -110,19 +152,52 @@ def getData(file):
     state_data_converted = formatStates(state_data.iloc[:,11])
 
     ## City
-    city_data = excelData.iloc[:, 12]                                       # Utilizo los datos de las ciudades tal cual
+    """
+    Al no requerir validación de ciudades implemento los datos tal y como se encuentran.
+    """
+    city_data = excelData.iloc[:, 12]
 
     ## Work Experience
+    """
+    Formateo las edades convirtiéndo los inputs en números que servirán como ID para una tabla que los relacionará.
+    """
     we_data = excelData
     column = "How many years of professional work experience do you have overall?"
-    we_data_converted = formatWorkExperience(we_data, column, 13)                       # rangos de edad actualizados a futuros IDS
+    we_data_converted = formatExperience(we_data, column, 13)
 
     ## Field Experience
+    """
+    Reutilizando la misma función que en el WorkExperience hago lo mismo.
+    """
     fe_dat = excelData
     column = "How many years of professional work experience do you have in your field?"  
-    fe_dat_converted = formatWorkExperience(fe_dat, column, 14)
+    fe_dat_converted = formatExperience(fe_dat, column, 14)
 
-    # ## DataFrame
+    ## Education
+    """
+    Formateo los inputs en números que servirán como ID para una tabla que los relacionará.
+    """
+    education_data = excelData
+    education_data_converted = formatEducation(education_data)
+
+    ## Gender
+    """
+    Formateo los inputs en números que servirán como ID para una tabla que los relacionará.
+    """
+    gender_data = excelData
+    gender_data_converted = formatEducation(gender_data)
+
+    ## Race
+    """
+    En el caso de que haya múltiples razas escogidas, sustituyo el input por "múltiple"
+    """
+    race_data = excelData
+    race_data_converted = formatRace(race_data)
+
+    #### DataFrame
+    """
+    Construcción del dataframe
+    """
     df = pd.DataFrame({
         'time_stamp': timeStamp_convert,                                     # Inserción de timestamp formateado
         'age': age_convert,                                                  # Inserción de edad formateada
@@ -138,11 +213,15 @@ def getData(file):
         'us_state': state_data_converted,                                    # Inserción de estados americanos
         'city': city_data,                                                   # Inserción de ciudades
         'work_experience': we_data_converted,                                # Inserción años de experiencia trabajados
-        'field_experience': fe_dat_converted                                 # Inserción de años experiencia campo trabajo
+        'field_experience': fe_dat_converted,                                # Inserción de años experiencia campo trabajo
+        'education': education_data_converted,                               # Inserción de mayor nivel educación
+        'gender': gender_data_converted,                                     # Inserción de género
+        'race': race_data_converted                                          # Inserción de Raza
+
     })
 
     print(df)
-    df.to_excel('clean_data.xlsx', index=False)
+    df.to_excel('clean_data.xlsx', index=False) # Creación de excel con datos limpios
 
 
 if __name__ == "__main__":

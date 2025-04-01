@@ -32,19 +32,19 @@ def formatCountry(data, country_configs):
     masks = {country: data.apply(create_country_matcher(config['valid_terms']))
              for country, config in country_configs.items()}
     
-    formatted_data = data.copy()
+    clean_data = data.copy()
     all_masks = pd.Series(False, index=data.index)
     
     for country in country_configs.keys():
         mask = masks[country]
         exclude_mask = all_masks if all_masks.any() else pd.Series(False, index=data.index)
         final_mask = mask & ~exclude_mask
-        formatted_data[final_mask] = country_configs[country]['code']
+        clean_data[final_mask] = country_configs[country]['code']
         all_masks |= mask
 
-    formatted_data[~all_masks] = 'other'
+    clean_data[~all_masks] = 'other'
     
-    return formatted_data
+    return clean_data
 
 
 def formatUnMatchedCountries(data, country_configs):
@@ -71,7 +71,7 @@ def formatUnMatchedCountries(data, country_configs):
     return codeFormat
 
 def formatCurrency(data,dataExtra):                     # Formateo de divisa
-    formated_data = []
+    clean_data = []
 
     for i in range(len(data)):                          # Recorro data e igualo las posiciones de las dos variables. En el momento en el que el valor de data es "other", almacena el valor de la misma fila de la columna contigua (dataExtra).
         current_currency = data[i]
@@ -79,12 +79,12 @@ def formatCurrency(data,dataExtra):                     # Formateo de divisa
         
         if current_currency.lower() == "other":
             if pd.notna(extra_value):
-                formated_data.append(extra_value)
+                clean_data.append(extra_value)
             else:
-                formated_data.append("other(unknown)")
+                clean_data.append("other(unknown)")
         else:
-            formated_data.append(current_currency)
-    return formated_data
+            clean_data.append(current_currency)
+    return clean_data
 
 def formatStates(state_data) -> List[str]:              # Función formalización de estados
     results = []
@@ -116,25 +116,65 @@ def formatAddIncome(data):                                # Función que formate
 
 
 def formatBonusSalary(data):                # Función que formatea el extra del salario
-    formated_data = []
+    clean_data = []
 
     for i in data:
         if np.isnan(i):                    # Comprueba si recibe NaN, en cual caso devolverá 0, sino, devolverá el valor numérico.
-            formated_data.append(0)
+            clean_data.append(0)
         else:
-            formated_data.append(i)
-    return formated_data
+            clean_data.append(i)
+    return clean_data
 
 
 def formatJobTitleExtra(data):              # Función que formatea la información extra de los títulos de trabajo
-    formated_data = []
+    clean_data = []
     for i in data:                          # Comprueba que reciba un string, y si no es así asume que no es data valido, devolviendo "noData"
         if isinstance(i, str):
-            formated_data.append(i)
+            clean_data.append(i)
         else:
-            formated_data.append("noData")
+            clean_data.append("noData")
     
-    return formated_data
+    return clean_data
+
+def formatEducation(data):
+
+    column = 'What is your highest level of education completed?'
+    data[column] = data[column].fillna(0)
+
+    education_map = {
+        "Master's degree": 1,
+        "College degree": 2,
+        "PhD": 3,
+        "High School": 4,
+        "Professional degree (MD, JD, etc.)": 5,
+        "Some college": 6
+    }
+    data[column] = data[column].replace(education_map)
+
+    return data.iloc[:,15]
+
+def formatGender(data):
+    column = 'What is your gender?'
+    data[column] = data[column].fillna(0)
+
+    gender_map = {
+        "Man": 1,
+        "Non-binary":2,
+        "Other or prefer not to answer": 3,
+        "Prefer not to answer": 4,
+        "Woman":5
+    }
+    data[column] = data[column].replace(gender_map)
+
+    return data.iloc[:,16]
+
+
+def formatRace(data):
+    column = 'What is your race? (Choose all that apply.)'
+    data[column] = data[column].str.replace(',', ' or ', regex=False)
+    data[column] = data[column].apply(lambda x: 'multiple' if str(x).count('or') > 1 else x)
+    data[column] = data[column].fillna('noData')
+    return data.iloc[:,17]
 
 
 def formatIndustry(industryData):   ## Función que maneja el formato de la industria
@@ -156,7 +196,7 @@ def formatIndustry(industryData):   ## Función que maneja el formato de la indu
     return industry_list,industry_extra
 
 
-def formatWorkExperience(data, column, position):
+def formatExperience(data, column, position):
     data.replace({column: '1 year or less'}, {column: 1}, inplace=True)
     data.replace({column: '2 - 4 years'}, {column: 2}, inplace=True)
     data.replace({column: '5-7 years'}, {column: 3}, inplace=True)
@@ -212,4 +252,9 @@ if __name__ == "__main__":
     formatCurrency()
     formatUnMatchedCountries()
     formatStates()
-    formatWorkExperience()
+    formatExperience()
+    formatEducation()
+    textCleaner()
+    load_country_configs()
+    formatGender()
+    formatRace()
