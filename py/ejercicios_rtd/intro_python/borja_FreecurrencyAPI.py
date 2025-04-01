@@ -54,7 +54,6 @@ def checkLatest():
 
     return fetch
 
-
 class CurrencyConverter:
     def __init__(self, key):
         self.key = key
